@@ -27,7 +27,7 @@ Options:
 Management Commands:
   app*        Docker App (Docker Inc., v0.9.1-beta3)
   builder     Manage builds
-  buildx*     Build with BuildKit (Docker Inc., v0.5.0-docker)
+  buildx*     Build with BuildKit (Docker Inc., v0.5.1-docker)
   checkpoint  Manage checkpoints
   config      Manage Docker configs
   container   Manage containers
