@@ -26,7 +26,7 @@ Usage:
 
 Flags:
       --add-dir-header                                           If true, adds the file directory to the header of the log messages
-      --address ip                                               The IP address for the Kubelet to serve on (set to '0.0.0.0' for all IPv4 interfaces and '::' for all IPv6 interfaces) (default 0.0.0.0) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
+      --address ip                                               The IP address for the Kubelet to serve on (set to '0.0.0.0' or '::' for listening in all interfaces and IP families) (default 0.0.0.0) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
       --allowed-unsafe-sysctls strings                           Comma-separated whitelist of unsafe sysctls or unsafe sysctl patterns (ending in *). Use these at your own risk. (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
       --alsologtostderr                                          log to standard error as well as files
       --anonymous-auth                                           Enables anonymous requests to the Kubelet server. Requests that are not rejected by another authentication method are treated as anonymous requests. Anonymous requests have a username of system:anonymous, and a group name of system:unauthenticated. (default true) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
@@ -75,7 +75,7 @@ Flags:
       --docker-tls-cert string                                   path to client certificate (default "cert.pem") (DEPRECATED: This is a cadvisor flag that was mistakenly registered with the Kubelet. Due to legacy concerns, it will follow the standard CLI deprecation timeline before being removed.)
       --docker-tls-key string                                    path to private key (default "key.pem") (DEPRECATED: This is a cadvisor flag that was mistakenly registered with the Kubelet. Due to legacy concerns, it will follow the standard CLI deprecation timeline before being removed.)
       --dynamic-config-dir string                                The Kubelet will use this directory for checkpointing downloaded configurations and tracking configuration health. The Kubelet will create this directory if it does not already exist. The path may be absolute or relative; relative paths start at the Kubelet's current working directory. Providing this flag enables dynamic Kubelet configuration. The DynamicKubeletConfig feature gate must be enabled to pass this flag; this gate currently defaults to true because the feature is beta.
-      --enable-cadvisor-json-endpoints                           Enable cAdvisor json /spec and /stats/* endpoints.  [default=false] (DEPRECATED: will be removed in a future version)
+      --enable-cadvisor-json-endpoints                           Enable cAdvisor json /spec and /stats/* endpoints. This flag has no effect on the /stats/summary endpoint.  [default=false] (DEPRECATED: will be removed in a future version)
       --enable-controller-attach-detach                          Enables the Attach/Detach controller to manage attachment/detachment of volumes scheduled to this node, and disables kubelet from executing any attach/detach operations (default true) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
       --enable-debugging-handlers                                Enables server endpoints for log collection and local running of containers and commands (default true) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
       --enable-load-reader                                       Whether to enable cpu load reader (DEPRECATED: This is a cadvisor flag that was mistakenly registered with the Kubelet. Due to legacy concerns, it will follow the standard CLI deprecation timeline before being removed.)
@@ -134,6 +134,7 @@ Flags:
                 ConfigurableFSGroupPolicy=true|false (BETA - default=true)
                 CronJobControllerV2=true|false (ALPHA - default=false)
                 CustomCPUCFSQuotaPeriod=true|false (ALPHA - default=false)
+                DaemonSetUpdateSurge=true|false (ALPHA - default=false)
                 DefaultPodTopologySpread=true|false (BETA - default=true)
                 DevicePlugins=true|false (BETA - default=true)
                 DisableAcceleratorUsageMetrics=true|false (BETA - default=true)
@@ -155,14 +156,11 @@ Flags:
                 HPAScaleToZero=true|false (ALPHA - default=false)
                 HugePageStorageMediumSize=true|false (BETA - default=true)
                 IPv6DualStack=true|false (ALPHA - default=false)
-                ImmutableEphemeralVolumes=true|false (BETA - default=true)
                 KubeletCredentialProviders=true|false (ALPHA - default=false)
                 KubeletPodResources=true|false (BETA - default=true)
-                LegacyNodeRoleBehavior=true|false (BETA - default=true)
                 LocalStorageCapacityIsolation=true|false (BETA - default=true)
                 LocalStorageCapacityIsolationFSQuotaMonitoring=true|false (ALPHA - default=false)
                 MixedProtocolLBService=true|false (ALPHA - default=false)
-                NodeDisruptionExclusion=true|false (BETA - default=true)
                 NonPreemptingPriority=true|false (BETA - default=true)
                 PodDisruptionBudget=true|false (BETA - default=true)
                 PodOverhead=true|false (BETA - default=true)
@@ -176,7 +174,6 @@ Flags:
                 ServerSideApply=true|false (BETA - default=true)
                 ServiceAccountIssuerDiscovery=true|false (BETA - default=true)
                 ServiceLBNodePortControl=true|false (ALPHA - default=false)
-                ServiceNodeExclusion=true|false (BETA - default=true)
                 ServiceTopology=true|false (ALPHA - default=false)
                 SetHostnameAsFQDN=true|false (BETA - default=true)
                 SizeMemoryBackedVolumes=true|false (ALPHA - default=false)
@@ -193,7 +190,7 @@ Flags:
       --file-check-frequency duration                            Duration between checking config files for new data (default 20s) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
       --global-housekeeping-interval duration                    Interval between global housekeepings (default 1m0s) (DEPRECATED: This is a cadvisor flag that was mistakenly registered with the Kubelet. Due to legacy concerns, it will follow the standard CLI deprecation timeline before being removed.)
       --hairpin-mode string                                      How should the kubelet setup hairpin NAT. This allows endpoints of a Service to loadbalance back to themselves if they should try to access their own Service. Valid values are "promiscuous-bridge", "hairpin-veth" and "none". (default "promiscuous-bridge") (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
-      --healthz-bind-address ip                                  The IP address for the healthz server to serve on (set to '0.0.0.0' for all IPv4 interfaces and '::' for all IPv6 interfaces) (default 127.0.0.1) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
+      --healthz-bind-address ip                                  The IP address for the healthz server to serve on (set to '0.0.0.0' or '::' for listening in all interfaces and IP families) (default 127.0.0.1) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
       --healthz-port int32                                       The port of the localhost healthz endpoint (set to 0 to disable) (default 10248) (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
   -h, --help                                                     help for kubelet
       --hostname-override string                                 If non-empty, will use this string as identification instead of the actual hostname. If --cloud-provider is set, the cloud provider determines the name of the node (consult cloud provider documentation to determine if and how the hostname is used).

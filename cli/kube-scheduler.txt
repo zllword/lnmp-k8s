@@ -39,7 +39,7 @@ Secure serving flags:
 
 Insecure serving flags:
 
-      --address string   DEPRECATED: the IP address on which to listen for the --port port (set to 0.0.0.0 for all IPv4 interfaces and :: for all IPv6 interfaces). See --bind-address instead. (default "0.0.0.0")
+      --address string   DEPRECATED: the IP address on which to listen for the --port port (set to 0.0.0.0 or :: for listening in all interfaces and IP families). See --bind-address instead. (default "0.0.0.0")
       --port int         DEPRECATED: the port on which to serve HTTP insecurely without authentication and authorization. If 0, don't serve plain HTTP at all. See --secure-port instead. (default 10251)
 
 Authentication flags:
@@ -126,6 +126,7 @@ Feature gate flags:
                                       ConfigurableFSGroupPolicy=true|false (BETA - default=true)
                                       CronJobControllerV2=true|false (ALPHA - default=false)
                                       CustomCPUCFSQuotaPeriod=true|false (ALPHA - default=false)
+                                      DaemonSetUpdateSurge=true|false (ALPHA - default=false)
                                       DefaultPodTopologySpread=true|false (BETA - default=true)
                                       DevicePlugins=true|false (BETA - default=true)
                                       DisableAcceleratorUsageMetrics=true|false (BETA - default=true)
@@ -147,14 +148,11 @@ Feature gate flags:
                                       HPAScaleToZero=true|false (ALPHA - default=false)
                                       HugePageStorageMediumSize=true|false (BETA - default=true)
                                       IPv6DualStack=true|false (ALPHA - default=false)
-                                      ImmutableEphemeralVolumes=true|false (BETA - default=true)
                                       KubeletCredentialProviders=true|false (ALPHA - default=false)
                                       KubeletPodResources=true|false (BETA - default=true)
-                                      LegacyNodeRoleBehavior=true|false (BETA - default=true)
                                       LocalStorageCapacityIsolation=true|false (BETA - default=true)
                                       LocalStorageCapacityIsolationFSQuotaMonitoring=true|false (ALPHA - default=false)
                                       MixedProtocolLBService=true|false (ALPHA - default=false)
-                                      NodeDisruptionExclusion=true|false (BETA - default=true)
                                       NonPreemptingPriority=true|false (BETA - default=true)
                                       PodDisruptionBudget=true|false (BETA - default=true)
                                       PodOverhead=true|false (BETA - default=true)
@@ -168,7 +166,6 @@ Feature gate flags:
                                       ServerSideApply=true|false (BETA - default=true)
                                       ServiceAccountIssuerDiscovery=true|false (BETA - default=true)
                                       ServiceLBNodePortControl=true|false (ALPHA - default=false)
-                                      ServiceNodeExclusion=true|false (BETA - default=true)
                                       ServiceTopology=true|false (ALPHA - default=false)
                                       SetHostnameAsFQDN=true|false (BETA - default=true)
                                       SizeMemoryBackedVolumes=true|false (ALPHA - default=false)

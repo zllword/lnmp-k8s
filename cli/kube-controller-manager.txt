@@ -63,6 +63,7 @@ Generic flags:
                                                  ConfigurableFSGroupPolicy=true|false (BETA - default=true)
                                                  CronJobControllerV2=true|false (ALPHA - default=false)
                                                  CustomCPUCFSQuotaPeriod=true|false (ALPHA - default=false)
+                                                 DaemonSetUpdateSurge=true|false (ALPHA - default=false)
                                                  DefaultPodTopologySpread=true|false (BETA - default=true)
                                                  DevicePlugins=true|false (BETA - default=true)
                                                  DisableAcceleratorUsageMetrics=true|false (BETA - default=true)
@@ -84,14 +85,11 @@ Generic flags:
                                                  HPAScaleToZero=true|false (ALPHA - default=false)
                                                  HugePageStorageMediumSize=true|false (BETA - default=true)
                                                  IPv6DualStack=true|false (ALPHA - default=false)
-                                                 ImmutableEphemeralVolumes=true|false (BETA - default=true)
                                                  KubeletCredentialProviders=true|false (ALPHA - default=false)
                                                  KubeletPodResources=true|false (BETA - default=true)
-                                                 LegacyNodeRoleBehavior=true|false (BETA - default=true)
                                                  LocalStorageCapacityIsolation=true|false (BETA - default=true)
                                                  LocalStorageCapacityIsolationFSQuotaMonitoring=true|false (ALPHA - default=false)
                                                  MixedProtocolLBService=true|false (ALPHA - default=false)
-                                                 NodeDisruptionExclusion=true|false (BETA - default=true)
                                                  NonPreemptingPriority=true|false (BETA - default=true)
                                                  PodDisruptionBudget=true|false (BETA - default=true)
                                                  PodOverhead=true|false (BETA - default=true)
@@ -105,7 +103,6 @@ Generic flags:
                                                  ServerSideApply=true|false (BETA - default=true)
                                                  ServiceAccountIssuerDiscovery=true|false (BETA - default=true)
                                                  ServiceLBNodePortControl=true|false (ALPHA - default=false)
-                                                 ServiceNodeExclusion=true|false (BETA - default=true)
                                                  ServiceTopology=true|false (ALPHA - default=false)
                                                  SetHostnameAsFQDN=true|false (BETA - default=true)
                                                  SizeMemoryBackedVolumes=true|false (ALPHA - default=false)
@@ -155,7 +152,7 @@ Secure serving flags:
 
 Insecure serving flags:
 
-      --address ip   The IP address on which to serve the insecure --port (set to 0.0.0.0 for all IPv4 interfaces and :: for all IPv6 interfaces). (default 0.0.0.0) (DEPRECATED: see --bind-address instead.)
+      --address ip   The IP address on which to serve the insecure --port (set to '0.0.0.0' or '::' for listening in all interfaces and IP families). (default 0.0.0.0) (DEPRECATED: see --bind-address instead.)
       --port int     The port on which to serve unsecured, unauthenticated access. Set to 0 to disable. (default 10252) (DEPRECATED: see --secure-port instead.)
 
 Authentication flags:
